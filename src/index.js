@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import { useFrame, useThree } from "@react-three/fiber"
 import styles from './styles.js';
 
+// use our keyboard listener
+import { useKeyboard } from './hooks/useKeyboard';
 
 const sizeEnum = {
     small: [800, 480],
@@ -20,8 +23,61 @@ const turtle = {
 };
 const moveArray = ['shiftLeft', 'shiftRight', 'shiftUp', 'shiftDown'];
 
-function ReactRoot(){
+function ReactRoot() {
+    // grab deconstructed list of actions from keyboard listener
+    const {moveForward, turnLeft, turnRight, penIsDown, drawingStar} = useKeyboard();
+
     const [size, setSize] = useState('small');
+    const width = sizeEnum[size][0];
+    const height = sizeEnum[size][1];
+
+    // if turning, update the turtle's angle
+    const rotationSpeed = 0.05;
+    let updatedAngle = turtle.angle - (turnLeft ? rotationSpeed : 0) + (turnRight ? rotationSpeed : 0);
+    // want to restrict angle between 0 and 360 
+    while (updatedAngle > 360) {
+        updatedAngle -= 360;
+    }
+    while (updatedAngle < 0) {
+        updatedAngle += 360
+    }
+    turtle.angle = updatedAngle;
+
+    // if moving forward, update the turtle's position based on it's local forward direction
+    const movementSpeed = 0.01; 
+        // this is really movement distance, the speed is dependent on how fast each frame renders
+        // so it is likely the case that when drawing, the turtle moves slower (rendering takes more processing)
+        // this is not the best way to do it, but for time's sake i will leave it like this
+        // improvement here would be separating the thread for movement and rendering
+    const updatedPositionX = Math.cos(turtle.angle * Math.PI / 180 + Math.PI / 2) * movementSpeed + turtle.x;
+    const updatedPositionY = Math.sin(turtle.angle * Math.PI / 180 + Math.PI / 2) * movementSpeed + turtle.y;
+    if (moveForward) {
+        // if drawing, draw! don't want to be drawing pen and star at same time, so prioritize penIsDown
+        if (penIsDown) {
+            turtle.forward(movementSpeed);
+        } else if (drawingStar) {
+            turtle.drawStar();
+        }
+        turtle.x = updatedPositionX;
+        turtle.y = updatedPositionY;
+    } else if (drawingStar) {
+        turtle.drawStar();
+    }
+
+    // keeps the turtle within the bounds of the canvas, I set this edgeGap arbitrarily
+    // it's a bit finniky because the turtle's position is not the center of the triangle
+    // improvement here would involve re-aligning the center of turtle
+    const edgeGap = 8;
+    if (turtle.x > width - edgeGap) {
+        turtle.x = edgeGap;
+    } else if (turtle.x < edgeGap) {
+        turtle.x = width - edgeGap;
+    }
+    if (turtle.y > height - edgeGap) {
+        turtle.y = edgeGap;
+    } else if (turtle.y < edgeGap) {
+        turtle.y = height - edgeGap;
+    }
 
     // turtle position
     const [x, setX] = useState(turtle.x);
@@ -34,17 +90,13 @@ function ReactRoot(){
         setAngle(turtle.angle);
     }, 50);
 
-
-    console.log('turtle X:', turtle.x, ' Y:', turtle.y, ' angle:', turtle.angle );
-    const width = sizeEnum[size][0];
-    const height = sizeEnum[size][1];
     return (
         <div style={styles.root}>
             <div style={styles.header}>
                 <h1 style={styles.ellipseText}>
-                    Internship Whitespace
+                    Eric Bollar Quicken Project
                 </h1>
-                <div style={styles.stack}>
+                {/* <div style={styles.stack}>
                     <h4>
                         Canvas Size:
                     </h4>
@@ -63,7 +115,7 @@ function ReactRoot(){
                             </button>
                         )}
                     </div>
-                </div>
+                </div> */}
             </div>
             <div style={styles.column}>
                 <button
@@ -87,12 +139,12 @@ function ReactRoot(){
                         height={height}
                     />
                 </div>
-                <h4 style={{ margin: 0 }}>
+                {/* <h4 style={{ margin: 0 }}>
                     TURTLE FUNCTIONS
-                </h4>
+                </h4> */}
 
                 <div style={{ ...styles.row, ...styles.spacer}}>
-                    {moveArray.map((key) =>
+                    {/* {moveArray.map((key) =>
                         <button
                             key={key}
                             onClick={() => turtle[key]()}
@@ -100,33 +152,37 @@ function ReactRoot(){
                         >
                             {key}
                         </button>
-                    )}
+                    )} */}
+                    
+                <p>Thanks for viewing my project! This is Turtle. You can move Turtle forward with 'W' and turn him with 'A' and 'D'.
+                    You can draw lines while moving by holding SPACE or by pressing '1', in which case Turtle will draw a star!
+                </p>
                 </div>
 
                 <div style={{ ...styles.row, maxWidth: width - 48 }}>
-                    <button
+                    {/* <button
                         onClick={() => turtle.hexagon()}
                         style={styles.blueButton}
                     >
                         Hexagon
-                    </button>
-                    <button
+                    </button> */}
+                    {/* <button
                         onClick={() => turtle.drawStar()}
                         style={styles.blueButton}
                     >
                         Star
-                    </button>
+                    </button> */}
                     {/*
                     // ================================================================================
                     //                      Maybe things should go here?
                     // ================================================================================
                     */}
-                    <button
+                    {/* <button
                         onClick={() => console.log('yo')}
                         style={styles.blueButton}
                     >
                         Custom ???
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>
