@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Navbar = ({size, sizeEnum, changeCanvasSize}) => {
 
+    // navigation functions
     const navigate = useNavigate(); 
     const redirectToOtherPage = () => { 
         navigate("/otherpage");
@@ -11,17 +12,20 @@ export const Navbar = ({size, sizeEnum, changeCanvasSize}) => {
     const redirectToHome = () => {
         navigate("/");
     }
+    const redirectToMySite = () => {
+        window.open("https://www.ericbollar.com");
+    }
 
-    // this is practically the same as the template navbar
     return <div style={styles.header}>
         <h1 style={styles.ellipseText}>
             Eric Bollar Quicken Project
         </h1>
 
-
+        {/* navigation buttons */}
         <div style={styles.row}>
             <button style={styles.button} onClick={redirectToHome}>Project Page</button>
             <button style={styles.button} onClick={redirectToOtherPage}>Other Page</button>
+            <button style={styles.button} onClick={redirectToMySite}>EricBollar.com</button>
         </div>
 
         <div style={styles.stack}>
