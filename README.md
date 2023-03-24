@@ -1,4 +1,4 @@
-# BollarQuickenProject
+https://github.com/EricBollar/BollarQuickenProject
 
 Here are the additions that I made to this project:
 
