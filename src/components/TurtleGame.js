@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useKeyboard } from '../hooks/useKeyboard';
 import styles from '../styles.js';
+import { ColorSliders } from './ColorSliders';
 
 // local turtlegame attributes used for calculations
 const localTurtle = {
@@ -10,6 +11,7 @@ const localTurtle = {
     moving: false, // isMovingForward?
     turningLeft: false, // isTurning?
     turningRight: false,
+    color: '#000000', // pen color
     penDown: false, // isDrawingLine?
     drawingStar: false, // isDrawingStar?
     canvasWidth: 0, // canvas dimensions
@@ -32,6 +34,11 @@ const TurtleGame = ({width, height}) => {
 
     // grab deconstructed list of actions from keyboard listener
     const {KeyW, KeyA, KeyD, Space, Digit1} = useKeyboard();
+
+    // updates local color
+    const setColor = (color) => {
+        localTurtle.color = color;
+    }
 
     // update local canvasHeight when props change
     useEffect(() => {
@@ -157,7 +164,7 @@ const TurtleGame = ({width, height}) => {
         let y1 = localTurtle.y + length * Math.cos(angleInRadians);
         ctx.beginPath();
         ctx.lineWidth = 5;
-        ctx.strokeStyle = '#000000';
+        ctx.strokeStyle = localTurtle.color;
         ctx.moveTo(x1, y1);
         ctx.lineTo(localTurtle.x, localTurtle.y);
         ctx.stroke();
@@ -204,9 +211,13 @@ const TurtleGame = ({width, height}) => {
     
     // return the canvas element and reset button
     return <>
-        <button style={styles.button} onClick={resetCanvas}>
-            Reset Canvas
-        </button>
+        <div style={styles.row}>
+            <button style={styles.button} onClick={resetCanvas}>
+                Reset Canvas
+            </button>
+
+            <ColorSliders setColor={setColor}/>
+        </div>
             
         <div style={{...styles.canvasWrapper, width: width + 2, height: height + 2 }}>
             <div

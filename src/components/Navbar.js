@@ -3,6 +3,7 @@ import styles from '../styles.js';
 
 export const Navbar = ({size, sizeEnum, changeCanvasSize}) => {
 
+    // this is practically the same as the template navbar
     return <div style={styles.header}>
         <h1 style={styles.ellipseText}>
             Eric Bollar Quicken Project

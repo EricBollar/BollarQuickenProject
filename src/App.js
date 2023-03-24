@@ -35,7 +35,7 @@ export default function App() {
         <div style={styles.column}>
             <TurtleGame width={width} height={height} />
 
-            <Footer width={800} />
+            <Footer width={width} />
         </div>
     </div>
 }
