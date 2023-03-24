@@ -1,13 +1,29 @@
 import React from "react";
 import styles from '../styles.js';
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = ({size, sizeEnum, changeCanvasSize}) => {
+
+    const navigate = useNavigate(); 
+    const redirectToOtherPage = () => { 
+        navigate("/otherpage");
+    }
+    const redirectToHome = () => {
+        navigate("/");
+    }
 
     // this is practically the same as the template navbar
     return <div style={styles.header}>
         <h1 style={styles.ellipseText}>
             Eric Bollar Quicken Project
         </h1>
+
+
+        <div style={styles.row}>
+            <button style={styles.button} onClick={redirectToHome}>Project Page</button>
+            <button style={styles.button} onClick={redirectToOtherPage}>Other Page</button>
+        </div>
+
         <div style={styles.stack}>
             <h4>
                 Canvas Size:

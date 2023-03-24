@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import styles from "./styles";
 import TurtleGame from "./components/TurtleGame";
 import { Navbar } from "./components/Navbar";
@@ -29,13 +30,30 @@ export default function App() {
         setSize(s);
     }
 
-    return <div style={styles.root}>
-        <Navbar size={size} sizeEnum={sizeEnum} changeCanvasSize={changeCanvasSize}/>
+    return <>
+        <BrowserRouter>
+            <div style={styles.root}>
+                <Routes>
+                    <Route path="/" element={
+                        <>
+                            <Navbar size={size} sizeEnum={sizeEnum} changeCanvasSize={changeCanvasSize}/>
 
-        <div style={styles.column}>
-            <TurtleGame width={width} height={height} />
+                            <div style={styles.column}>
+                                <TurtleGame width={width} height={height} />
 
-            <Footer width={width} />
-        </div>
-    </div>
+                                <Footer width={width} />
+                            </div>
+                        </>
+                    }></Route>
+                    <Route path="/otherpage" element={
+                        <>
+                            <Navbar size={size} sizeEnum={sizeEnum} changeCanvasSize={changeCanvasSize}/>
+
+                            <h1>This is another page.</h1>
+                        </>
+                    }></Route>
+                </Routes>
+            </div>
+        </BrowserRouter>
+    </>
 }
