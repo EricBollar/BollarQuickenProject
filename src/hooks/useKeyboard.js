@@ -4,11 +4,11 @@ import { useCallback, useEffect, useState } from "react"
 // defines which keys relate to which actions
 function actionByKey(key) {
     const keyActionMap = {
-        KeyW: 'moveForward',
-        KeyA: 'turnLeft',
-        KeyD: 'turnRight',
-        Space: 'penIsDown',
-        Digit1: 'drawingStar',
+        KeyW: 'KeyW',
+        KeyA: 'KeyA',
+        KeyD: 'KeyD',
+        Space: 'Space',
+        Digit1: 'Digit1',
     }
     return keyActionMap[key];
 }
@@ -16,11 +16,11 @@ function actionByKey(key) {
 export const useKeyboard = () => {
     // set "keydown" variables that can use elsewhere
     const[actions, setActions] = useState({
-        moveForward: false,
-        turnLeft: false,
-        turnRight: false,
-        penIsDown: false,
-        drawingStar: false,
+        KeyW: false,
+        KeyA: false,
+        KeyD: false,
+        Space: false,
+        Digit1: false,
     })
 
     // if key is pressed, set its action to true
