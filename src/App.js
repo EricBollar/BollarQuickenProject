@@ -34,6 +34,7 @@ export default function App() {
         <BrowserRouter>
             <div style={styles.root}>
                 <Routes>
+                    {/* Project Page */}
                     <Route path="/" element={
                         <>
                             <Navbar size={size} sizeEnum={sizeEnum} changeCanvasSize={changeCanvasSize}/>
@@ -45,6 +46,8 @@ export default function App() {
                             </div>
                         </>
                     }></Route>
+
+                    {/* Other Page */}
                     <Route path="/otherpage" element={
                         <>
                             <Navbar size={size} sizeEnum={sizeEnum} changeCanvasSize={changeCanvasSize}/>

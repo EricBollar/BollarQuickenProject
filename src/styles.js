@@ -27,6 +27,9 @@ function applyOpacityToHex(hex, opacity) {
     return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }
 
+// i did not make any changes to the styling
+// although I understand how to, I do not consider graphic design to be my strong suit
+
 const styles = {
     root: {
         height: '100vh',
