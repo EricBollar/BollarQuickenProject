@@ -1,5 +1,12 @@
 https://github.com/EricBollar/BollarQuickenProject
 
+How to run:
+1. Clone repo
+2. cd to Project Folder in terminal
+3. "npm install"
+4. "npm start"
+5. It should be running on http://localhost:3000/
+
 Here are the additions that I made to this project:
 
 1. Implemented Key Presses
@@ -17,3 +24,12 @@ Here are the additions that I made to this project:
 
 5. Implemented Pagination
     - Created "/otherpage" which can be redirected to with buttons in the navbar. Can also redirect back to "/"
+
+Possible Improvements:
+- Refactor TurtleGame.js into separate Turtle.js and Canvas.js components where Turtle.js handles all turtle-game state and Canvas.js simply handles drawing
+
+- Refactor to Typescript. I like typescript better
+
+- Improve UI. I don't find this as interesting as adding features, and for this short-timed demo I figured the default UI is sufficient.
+
+- Refactor canvas-size manipulation to within TurtleGame scope. Refactor ColorSliders html/css.
